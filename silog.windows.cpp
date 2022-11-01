@@ -1,6 +1,4 @@
-#include "common.hpp"
-#include "silog.hpp"
-
+module silog;
 #include <exception>
 #include <filesystem>
 #include <fstream>
