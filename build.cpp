@@ -14,7 +14,7 @@ int main(int argc, char ** argv) {
   m->add_impl("silog.windows");
 #endif
 
-  auto poc = all.add_unit<exe>("silog-poc");
+  auto poc = all.add_unit<app>("silog-poc");
   poc->add_ref(m);
   poc->add_unit<>("poc");
 
