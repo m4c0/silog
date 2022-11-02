@@ -2,7 +2,7 @@
 
 using namespace ecow;
 
-int main() {
+int main(int argc, char ** argv) {
   seq all { "all" };
 
   auto m = all.add_unit<mod>("silog");
@@ -18,5 +18,5 @@ int main() {
   poc->add_ref(m);
   poc->add_unit<>("poc");
 
-  return all.build() ? 0 : 1;
+  return all.main(argc, argv);
 }
