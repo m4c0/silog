@@ -9,7 +9,8 @@ int main(int argc, char ** argv) {
 
 #ifdef __APPLE__
   m->add_impl("silog.apple");
-  m->add_unit("apple");
+  m->add_unit("apple.mm");
+  m->add_framework("Foundation");
 #elif _WIN32
   m->add_impl("silog.windows");
 #endif
@@ -18,5 +19,5 @@ int main(int argc, char ** argv) {
   poc->add_ref(m);
   poc->add_unit<>("poc");
 
-  return all.main(argc, argv);
+  return run_main(all, argc, argv);
 }
