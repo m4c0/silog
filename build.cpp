@@ -16,6 +16,7 @@ int main(int argc, char ** argv) {
   // This may be a bug, but we don't need this using ecow (somehow)
   // m_oreo.add_system_library("log");
 
+  m->for_feature(unit::feats::webassembly).add_impl("silog.wasm");
   m->for_feature(unit::feats::windows_api).add_impl("silog.windows");
 
   // Tests if we link properly. Can be run on Mac and Windows
