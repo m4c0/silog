@@ -5,15 +5,14 @@ using namespace ecow;
 int main(int argc, char ** argv) {
   seq all { "all" };
 
-  auto m = all.add_unit<mod>("silog");
+  auto m = all.add_unit<per_feat<mod>>("silog");
 
-#ifdef __APPLE__
-  m->add_impl("silog.apple");
-  m->add_unit("apple.mm");
-  m->add_framework("Foundation");
-#elif _WIN32
-  m->add_impl("silog.windows");
-#endif
+  auto & m_steve = m->for_feature(unit::feats::objective_c);
+  m_steve.add_impl("silog.apple");
+  m_steve.add_unit<objc>("apple.mm")->add_framework("Foundation");
+
+  m->for_feature(unit::feats::android_ndk).add_impl("silog.android");
+  m->for_feature(unit::feats::windows_api).add_impl("silog.windows");
 
   auto poc = all.add_unit<app>("silog-poc");
   poc->add_ref(m);
