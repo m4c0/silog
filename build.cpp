@@ -30,6 +30,7 @@ int main(int argc, char ** argv) {
 
   // Tests if we link properly. Can be run on Mac and Windows
   auto poc = all.add_unit<app>("silog-poc");
+  poc->add_export("main");
   poc->add_ref(m);
   poc->add_unit<>("poc");
 

@@ -4,7 +4,10 @@
     <script type="text/javascript" src="out/wasm/silog-poc.js"></script>
     <script type="text/javascript">
       (function() {
-        ecow({ base_dir: "out/wasm" }).then(obj => obj.start());
+        ecow({ base_dir: "out/wasm" }).then(obj => {
+          obj.start();
+          obj.exports.main();
+        });
       })();
     </script>
   </body>
