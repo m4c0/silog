@@ -1,4 +1,4 @@
+*.json
 build
-*.o
-*.pcm
-*.exe
+build-poc
+out
