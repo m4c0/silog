@@ -18,7 +18,7 @@ int main(int argc, char ** argv) {
 
   auto & m_steve = m->for_feature(objective_c);
   m_steve.add_impl("silog.apple");
-  m_steve.add_unit<objc>("apple.mm")->add_framework("Foundation");
+  m_steve.add_unit<objc>("apple");
 
   auto & m_oreo = m->for_feature(android_ndk);
   m_oreo.add_impl("silog.android");
@@ -30,7 +30,7 @@ int main(int argc, char ** argv) {
 
   // Tests if we link properly. Can be run on Mac and Windows
   auto poc = all.add_unit<app>("silog-poc");
-  poc->add_export("main");
+  poc->add_feat<js>()->set("main", "");
   poc->add_ref(m);
   poc->add_unit<>("poc");
 
