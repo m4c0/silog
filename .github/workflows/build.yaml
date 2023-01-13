@@ -5,10 +5,18 @@ on:
   pull_request:
 
 jobs:
-  steve:
-    runs-on: macos-latest
+  build:
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
-      - run: brew install llvm
+      - if: matrix.os == 'macos-latest'
+        run: brew install llvm
+      - if: matrix.os == 'windows-latest'
+        run: choco upgrade llvm -y
       - uses: actions/checkout@v3
         with:
           path: silog
@@ -20,18 +28,3 @@ jobs:
           cd silog
           clang++ -I ../ecow -std=c++20 build.cpp -o build.exe
           ./build.exe
-  bill:
-    runs-on: windows-latest
-    steps:
-      - run: choco upgrade llvm -y
-      - uses: actions/checkout@v3
-        with:
-          path: silog
-      - uses: actions/checkout@v3
-        with:
-          repository: m4c0/ecow
-          path: ecow
-      - run: |
-          cd silog
-          clang++ -I ../ecow -std=c++20 build.cpp -o build.exe
-          .\build.exe
