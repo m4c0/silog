@@ -1,6 +1,7 @@
-#include "silog.hpp"
-
+module;
 #include <android/log.h>
+
+module silog;
 
 // TODO: fetch the app name somehow
 void silog::log(silog::log_level lvl, const char * msg) {

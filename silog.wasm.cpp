@@ -1,9 +1,9 @@
-#include "common.hpp"
-#include "silog.hpp"
-
+module;
 #include <sstream>
 
 extern "C" void silog_log(const char * msg);
+
+module silog;
 
 void silog::log(silog::log_level lvl, const char * msg) {
   auto level = silog::impl::log_level_cstr(lvl);
