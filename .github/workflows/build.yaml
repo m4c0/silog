@@ -10,6 +10,7 @@ jobs:
       matrix:
         os:
           - macos-latest
+          - ubuntu-latest
           - windows-latest
     runs-on: ${{ matrix.os }}
     steps:
@@ -17,6 +18,8 @@ jobs:
         run: brew install llvm
       - if: matrix.os == 'windows-latest'
         run: choco upgrade llvm -y
+      - if: matrix.os == 'ubuntu-latest'
+        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
       - uses: actions/checkout@v3
         with:
           path: silog
@@ -24,7 +27,11 @@ jobs:
         with:
           repository: m4c0/ecow
           path: ecow
-      - run: |
-          cd silog
-          clang++ -I ../ecow -std=c++20 build.cpp -o build.exe
-          ./build.exe
+      - run: clang++ -I ../ecow -std=c++20 build.cpp -o build.exe
+        working-directory: silog
+      - if: matrix.os != 'ubuntu-latest'
+        run: ./build.exe
+        working-directory: silog
+      - if: matrix.os == 'ubuntu-latest'
+        run: ./build.exe android
+        working-directory: silog
