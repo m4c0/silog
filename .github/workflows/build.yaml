@@ -19,7 +19,13 @@ jobs:
       - if: matrix.os == 'windows-latest'
         run: choco upgrade llvm -y
       - if: matrix.os == 'ubuntu-latest'
-        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+        run: |
+          sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+          wget https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-17/wasi-sysroot-17.0.tar.gz
+          tar xfv wasi-sysroot-17.0.tar.gz
+          wget https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-17/libclang_rt.builtins-wasm32-wasi-17.0.tar.gz
+          cd wasi-sysroot
+          tar xvf ../libclang_rt.builtins-wasm32-wasi-17.0.tar.gz
       - uses: actions/checkout@v3
         with:
           path: silog
@@ -33,5 +39,5 @@ jobs:
         run: ./build.exe
         working-directory: silog
       - if: matrix.os == 'ubuntu-latest'
-        run: ./build.exe android
+        run: ./build.exe android wasm
         working-directory: silog
