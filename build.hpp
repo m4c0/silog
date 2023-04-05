@@ -21,8 +21,7 @@ auto silog() {
 
   auto & m_oreo = m->for_feature(android_ndk);
   m_oreo.add_impl("silog.android");
-  // This may be a bug, but we don't need this using ecow (somehow)
-  // m_oreo.add_system_library("log");
+  m_oreo.add_system_library("log");
 
   m->for_feature(webassembly).add_impl("silog.wasm");
   m->for_feature(windows_api).add_impl("silog.windows");
