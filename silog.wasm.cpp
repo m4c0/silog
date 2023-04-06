@@ -1,7 +1,7 @@
 module;
 #include <sstream>
 
-extern "C" void silog_log(const char * msg);
+extern "C" void __attribute__((import_name("silog_log"))) silog_log(const char * msg);
 
 module silog;
 

@@ -7,7 +7,6 @@ int main(int argc, char ** argv) {
 
   // Tests if we link properly. Can be run on Mac and Windows
   auto poc = all.add_unit<app>("silog-poc");
-  poc->add_feat<export_symbol>("main");
   poc->add_ref(silog());
   poc->add_unit<>("poc");
 
