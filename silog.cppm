@@ -1,8 +1,8 @@
 export module silog;
+export import :base;
 
 export namespace silog {
-  enum log_level { debug, error, info, warning };
-  void log(log_level lvl, const char * msg);
+  __attribute__((format(printf, 2, 3))) void log(log_level lvl, const char * msg, ...);
 }
 
 namespace silog::impl {

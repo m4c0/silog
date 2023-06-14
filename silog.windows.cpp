@@ -16,7 +16,7 @@ static auto exe_path() noexcept {
 
   return std::filesystem::path { exepath };
 }
-void silog::log(silog::log_level lvl, const char * msg) {
+void silog::impl::log(silog::log_level lvl, const char * msg) {
   std::time_t t = std::time(nullptr);
   std::tm * tm = std::localtime(&t);
 

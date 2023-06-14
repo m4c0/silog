@@ -4,7 +4,7 @@ module;
 module silog;
 
 // TODO: fetch the app name somehow
-void silog::log(silog::log_level lvl, const char * msg) {
+void silog::impl::log(silog::log_level lvl, const char * msg) {
   switch (lvl) {
   case silog::debug:
     __android_log_print(ANDROID_LOG_DEBUG, "silog", "%s", msg);
