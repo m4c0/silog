@@ -19,3 +19,16 @@ namespace silog::impl {
     }
   }
 }
+
+#if __ANDROID__
+#pragma ecow add_impl android
+#pragma ecow add_impl sprintf
+#pragma ecow add_system_library log
+#elif __APPLE__
+#pragma ecow add_impl sprintf
+#elif WIN32
+#pragma ecow add_impl sprintf
+#pragma ecow add_impl windows
+#elif WASM
+#pragma ecow add_impl wasm
+#endif
