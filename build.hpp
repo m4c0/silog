@@ -16,12 +16,8 @@ auto silog() {
 })");
 
   auto & m_steve = m->for_feature(objective_c);
-  m_steve.add_impl("silog.apple");
-  m_steve.add_unit<objc>("apple");
-
   auto & m_oreo = m->for_feature(android_ndk);
   auto & m_wasm = m->for_feature(webassembly);
   auto & m_bill = m->for_feature(windows_api);
-
   return m;
 }
