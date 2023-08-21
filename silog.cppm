@@ -8,6 +8,9 @@ export namespace silog {
     // TODO: allow removal of this using some flag
     if (!cond) log(lvl, "%s", msg);
   }
+  inline void assert(bool cond, const char * msg) {
+    assert(cond, error, msg);
+  }
 }
 
 namespace silog::impl {
