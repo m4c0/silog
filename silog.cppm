@@ -34,7 +34,7 @@ namespace silog::impl {
 #elif __APPLE__
 #pragma ecow add_impl apple sprintf
 #pragma ecow add_framework Foundation
-#elif WIN32
+#elif _WIN32
 #pragma ecow add_impl sprintf windows
 #elif WASM
 #pragma ecow add_impl wasm
