@@ -4,7 +4,7 @@
 auto silog() {
   using namespace ecow;
 
-  auto m = unit::create<per_feat<mod>>("silog");
+  auto m = unit::create<mod>("silog");
   m->add_feat<inline_js>("silog_log", R"((ptr) => {
   const view = new Uint8Array(ecow_buffer);
   var str = '';
@@ -14,10 +14,5 @@ auto silog() {
   }
   console.log(str);
 })");
-
-  auto & m_steve = m->for_feature(objective_c);
-  auto & m_oreo = m->for_feature(android_ndk);
-  auto & m_wasm = m->for_feature(webassembly);
-  auto & m_bill = m->for_feature(windows_api);
   return m;
 }
