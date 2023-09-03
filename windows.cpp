@@ -7,6 +7,8 @@ module;
 
 module silog;
 
+static HANDLE g_mutex = nullptr;
+
 static auto exe_path() noexcept {
   TCHAR exepath[MAX_PATH + 1];
 
@@ -16,7 +18,21 @@ static auto exe_path() noexcept {
 
   return std::filesystem::path { exepath };
 }
+
+class mutex {
+public:
+  mutex() {
+    if (g_mutex == nullptr) g_mutex = CreateMutex(nullptr, false, nullptr);
+    if (g_mutex != nullptr) WaitForSingleObject(g_mutex, INFINITE);
+  }
+  ~mutex() {
+    if (g_mutex != nullptr && !ReleaseMutex(g_mutex)) g_mutex = nullptr;
+  }
+};
+
 void silog::impl::log(silog::log_level lvl, const char * msg) {
+  mutex m {};
+
   std::time_t t = std::time(nullptr);
   std::tm * tm = std::localtime(&t);
 
