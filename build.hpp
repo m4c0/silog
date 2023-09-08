@@ -1,5 +1,5 @@
 #pragma once
-#include "ecow.hpp"
+#include "../ecow/ecow.hpp"
 
 auto silog() {
   using namespace ecow;
