@@ -29,13 +29,13 @@ namespace silog::impl {
 }
 
 #if __ANDROID__
-#pragma ecow add_impl android sprintf
-#pragma ecow add_system_library log
+#pragma leco add_impl android sprintf
+#pragma leco add_library log
 #elif __APPLE__
-#pragma ecow add_impl apple sprintf
-#pragma ecow add_framework Foundation
+#pragma leco add_impl apple sprintf
+#pragma leco add_framework Foundation
 #elif _WIN32
-#pragma ecow add_impl sprintf windows
+#pragma leco add_impl sprintf windows
 #elif WASM
-#pragma ecow add_impl wasm
+#pragma leco add_impl wasm
 #endif
