@@ -33,11 +33,12 @@ public:
 void silog::impl::log(silog::log_level lvl, const char * msg) {
   mutex m {};
 
+  std::tm tm;
   std::time_t t = std::time(nullptr);
-  std::tm * tm = std::localtime(&t);
+  localtime_s(&tm, &t);
 
   auto exe = exe_path();
   auto level = silog::impl::log_level_cstr(lvl);
   std::ofstream out { exe.replace_extension(".log"), std::ios::app };
-  out << std::put_time(tm, "%F %T %z") << " [" << level << "] " << msg << std::endl;
+  out << std::put_time(&tm, "%F %T %z") << " [" << level << "] " << msg << std::endl;
 }
