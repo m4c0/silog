@@ -11,7 +11,7 @@ export namespace silog {
   inline void assert(bool cond, const char * msg) {
     assert(cond, error, msg);
   }
-}
+} // namespace silog
 
 namespace silog::impl {
   static auto log_level_cstr(silog::log_level lvl) {
@@ -26,7 +26,7 @@ namespace silog::impl {
       return "warning";
     }
   }
-}
+} // namespace silog::impl
 
 #if __ANDROID__
 #pragma leco add_impl android sprintf
