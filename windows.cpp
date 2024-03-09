@@ -70,6 +70,10 @@ void silog::impl::log(silog::log_level lvl, const char * msg) {
       level,
       msg);
 
+  // Print to stdout when available. This is useful for `main` apps but it
+  // won't appear on `WinMain` apps.
+  fprintf(stdout, "%s", buf);
+
   file f { logpath };
   f.write(buf);
 }
