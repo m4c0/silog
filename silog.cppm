@@ -38,4 +38,6 @@ namespace silog::impl {
 #pragma leco add_impl sprintf windows
 #elif WASM
 #pragma leco add_impl wasm
+#elif __linux__
+#pragma leco add_impl linux sprintf
 #endif
