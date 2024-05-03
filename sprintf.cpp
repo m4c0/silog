@@ -2,7 +2,7 @@ module;
 #include <stdarg.h>
 #include <stdio.h>
 
-module silog:sprintf;
+module silog;
 import :base;
 
 void silog::log(log_level lvl, const char * msg, ...) {
