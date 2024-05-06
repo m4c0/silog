@@ -11,6 +11,16 @@ export namespace silog {
   inline void assert(bool cond, const char * msg) {
     assert(cond, error, msg);
   }
+
+  inline void log_failure(const char * msg) {
+    log(error, "Unexpected failure: %s", msg);
+  }
+
+  struct unexpected_failure {};
+  inline void fail(const char * msg) {
+    log_failure(msg);
+    throw unexpected_failure();
+  }
 } // namespace silog
 
 namespace silog::impl {
