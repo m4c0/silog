@@ -2,11 +2,11 @@ export module silog;
 export import :base;
 import jute;
 
+// TODO: allow removal of debug logs somehow
 export namespace silog {
   __attribute__((format(printf, 2, 3))) void log(log_level lvl, const char * msg, ...);
 
   inline void assert(bool cond, log_level lvl, const char * msg) {
-    // TODO: allow removal of this using some flag
     if (!cond) log(lvl, "%s", msg);
   }
   inline void assert(bool cond, const char * msg) {
