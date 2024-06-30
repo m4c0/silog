@@ -1,5 +1,6 @@
 export module silog;
 export import :base;
+import jute;
 
 export namespace silog {
   __attribute__((format(printf, 2, 3))) void log(log_level lvl, const char * msg, ...);
@@ -12,12 +13,12 @@ export namespace silog {
     assert(cond, error, msg);
   }
 
-  inline void log_failure(const char * msg) {
-    log(error, "Unexpected failure: %s", msg);
+  inline void log_failure(jute::view msg) {
+    log(error, "Unexpected failure: %.*s", static_cast<unsigned>(msg.size()), msg.data());
   }
 
   struct unexpected_failure {};
-  inline void fail(const char * msg) {
+  inline void fail(jute::view msg) {
     log_failure(msg);
     throw unexpected_failure();
   }
