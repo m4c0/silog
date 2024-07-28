@@ -29,13 +29,28 @@ public:
     CloseHandle(m_h);
   }
 
+  auto size() {
+    LARGE_INTEGER sz{};
+    return GetFileSizeEx(m_h, &sz) ? sz.QuadPart : 0;
+  }
+
   void write(const char * data) {
     DWORD out;
     WriteFile(m_h, data, strlen(data), &out, nullptr);
   }
 };
 
+static bool write(const char * logpath, const char * msg) {
+  file f { logpath };
+  if (f.size() > 10 * 1024 * 1024)
+    return false;
+
+  f.write(msg);
+  return true;
+}
+
 static char logpath[MAX_PATH + 1] {};
+static char bkppath[MAX_PATH + 1] {};
 void silog::impl::log(silog::log_level lvl, const char * msg) {
   mutex m {};
 
@@ -53,6 +68,9 @@ void silog::impl::log(silog::log_level lvl, const char * msg) {
     int rem = ext - logpath;
     if (rem > sizeof(logpath) - 4) return;
     strncpy_s(ext + 1, rem, "log", 3);
+
+    strncpy_s(bkppath, sizeof(bkppath), logpath, sizeof(logpath));
+    bkppath[strlen(bkppath) - 1] = '_';
   }
 
   char buf[1024] {};
@@ -73,7 +91,8 @@ void silog::impl::log(silog::log_level lvl, const char * msg) {
   // Print to stdout when available. This is useful for `main` apps but it
   // won't appear on `WinMain` apps.
   fprintf(stdout, "%s", buf);
-
-  file f { logpath };
-  f.write(buf);
+  if (!write(logpath, buf)) {
+    MoveFileEx(logpath, bkppath, MOVEFILE_REPLACE_EXISTING);
+    write(logpath, buf);
+  }
 }
