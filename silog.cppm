@@ -9,9 +9,7 @@ export namespace silog {
   inline void assert(bool cond, log_level lvl, const char * msg) {
     if (!cond) log(lvl, "%s", msg);
   }
-  inline void assert(bool cond, const char * msg) {
-    assert(cond, error, msg);
-  }
+  inline void assert(bool cond, const char * msg) { assert(cond, error, msg); }
 
   inline void log_failure(jute::view msg) {
     log(error, "Unexpected failure: %.*s", static_cast<unsigned>(msg.size()), msg.data());
@@ -23,12 +21,15 @@ export namespace silog {
     throw unexpected_failure();
   }
 
-  inline void trace(jute::view msg, unsigned n) { log(debug, "%.*s: %d", static_cast<unsigned>(msg.size()), msg.data(), n); }
-  inline void trace(jute::view msg, float n) { log(debug, "%.*s: %f", static_cast<unsigned>(msg.size()), msg.data(), n); }
+  inline void trace(jute::view msg, unsigned n) {
+    log(debug, "%.*s: %d", static_cast<unsigned>(msg.size()), msg.data(), n);
+  }
+  inline void trace(jute::view msg, float n) {
+    log(debug, "%.*s: %f", static_cast<unsigned>(msg.size()), msg.data(), n);
+  }
   inline void trace(jute::view msg, jute::view str) {
-    log(debug, "%.*s: [%.*s]",
-        static_cast<unsigned>(msg.size()), msg.data(),
-        static_cast<unsigned>(str.size()), str.data());
+    log(debug, "%.*s: [%.*s]", static_cast<unsigned>(msg.size()), msg.data(), static_cast<unsigned>(str.size()),
+        str.data());
   }
 
   inline void trace(auto x) { trace(jute::view { "value" }, x); }
@@ -37,14 +38,10 @@ export namespace silog {
 namespace silog::impl {
   static auto log_level_cstr(silog::log_level lvl) {
     switch (lvl) {
-    case silog::debug:
-      return "debug";
-    case silog::error:
-      return "error";
-    case silog::info:
-      return "info";
-    case silog::warning:
-      return "warning";
+      case silog::debug: return "debug";
+      case silog::error: return "error";
+      case silog::info: return "info";
+      case silog::warning: return "warning";
     }
   }
 } // namespace silog::impl
