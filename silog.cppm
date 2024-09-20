@@ -22,6 +22,16 @@ export namespace silog {
     log_failure(msg);
     throw unexpected_failure();
   }
+
+  inline void trace(jute::view msg, unsigned n) { log(debug, "%.*s: %d", static_cast<unsigned>(msg.size()), msg.data(), n); }
+  inline void trace(jute::view msg, float n) { log(debug, "%.*s: %f", static_cast<unsigned>(msg.size()), msg.data(), n); }
+  inline void trace(jute::view msg, jute::view str) {
+    log(debug, "%.*s: [%.*s]",
+        static_cast<unsigned>(msg.size()), msg.data(),
+        static_cast<unsigned>(str.size()), str.data());
+  }
+
+  inline void trace(auto x) { trace(jute::view { "value" }, x); }
 } // namespace silog
 
 namespace silog::impl {
