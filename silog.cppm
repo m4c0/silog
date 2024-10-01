@@ -32,6 +32,7 @@ export namespace silog {
     log(debug, "%.*s: [%.*s]", static_cast<unsigned>(msg.size()), msg.data(), static_cast<unsigned>(str.size()),
         str.data());
   }
+  inline void trace(jute::view msg, jute::heap str) { trace(msg, *str); }
 
   inline void trace(auto x) { trace(jute::view { "value" }, x); }
 } // namespace silog
