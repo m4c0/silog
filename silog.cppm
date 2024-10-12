@@ -38,7 +38,7 @@ export namespace silog {
 } // namespace silog
 
 namespace silog::impl {
-  static auto log_level_cstr(silog::log_level lvl) {
+  constexpr inline auto log_level_cstr(silog::log_level lvl) {
     switch (lvl) {
       case silog::debug: return "debug";
       case silog::error: return "error";
