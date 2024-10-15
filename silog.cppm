@@ -12,16 +12,6 @@ export namespace silog {
   }
   inline void assert(bool cond, const char * msg) { assert(cond, error, msg); }
 
-  inline void log_failure(jute::view msg) {
-    log(error, "Unexpected failure: %.*s", static_cast<unsigned>(msg.size()), msg.data());
-  }
-
-  struct unexpected_failure {};
-  inline void fail(jute::view msg) {
-    log_failure(msg);
-    throw unexpected_failure();
-  }
-
   inline void trace(jute::view msg, unsigned n) {
     log(debug, "%.*s: %d", static_cast<unsigned>(msg.size()), msg.data(), n);
   }
