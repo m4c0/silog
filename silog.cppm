@@ -15,7 +15,15 @@ export namespace silog {
   inline void trace(jute::view msg, unsigned n) {
     log(debug, "%.*s: %d", static_cast<unsigned>(msg.size()), msg.data(), n);
   }
-  inline void trace(jute::view msg, int n) { log(debug, "%.*s: %d", static_cast<unsigned>(msg.size()), msg.data(), n); }
+  inline void trace(jute::view msg, int n) {
+    log(debug, "%.*s: %d", static_cast<unsigned>(msg.size()), msg.data(), n);
+  }
+  inline void trace(jute::view msg, long long n) {
+    log(debug, "%.*s: %lld", static_cast<unsigned>(msg.size()), msg.data(), n);
+  }
+  inline void trace(jute::view msg, unsigned long long n) {
+    log(debug, "%.*s: %lld", static_cast<unsigned>(msg.size()), msg.data(), n);
+  }
   inline void trace(jute::view msg, float n) {
     log(debug, "%.*s: %f", static_cast<unsigned>(msg.size()), msg.data(), n);
   }
