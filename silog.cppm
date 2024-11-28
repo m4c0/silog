@@ -6,6 +6,7 @@ import jute;
 export namespace silog {
   __attribute__((format(printf, 2, 3))) void log(log_level lvl, const char * msg, ...);
   [[noreturn]] __attribute__((format(printf, 1, 2))) void die(const char * msg, ...);
+  [[noreturn]] __attribute__((format(printf, 1, 2))) void whilst(const char * msg, ...);
 
   inline void assert(bool cond, log_level lvl, const char * msg) {
     if (!cond) log(lvl, "%s", msg);

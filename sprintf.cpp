@@ -32,3 +32,14 @@ void silog::die(const char * msg, ...) {
   impl::log(error, buf);
   throw death {};
 }
+void silog::whilst(const char * msg, ...) {
+  char buf[1024] = "while ";
+
+  va_list arg;
+  va_start(arg, msg);
+  vsnprintf(buf + 6, 1024 - 6, msg, arg);
+  va_end(arg);
+
+  impl::log(error, buf);
+  throw;
+}
