@@ -8,10 +8,10 @@ export namespace silog {
   [[noreturn]] __attribute__((format(printf, 1, 2))) void die(const char * msg, ...);
   [[noreturn]] __attribute__((format(printf, 1, 2))) void whilst(const char * msg, ...);
 
-  inline void assert(bool cond, log_level lvl, const char * msg) {
-    if (!cond) log(lvl, "%s", msg);
+  inline void assert(bool cond, const char * msg) {
+    if (cond) return;
+    die("%s", msg);
   }
-  inline void assert(bool cond, const char * msg) { assert(cond, error, msg); }
 
   inline void trace(jute::view msg, unsigned n) {
     log(debug, "%.*s: %d", static_cast<unsigned>(msg.size()), msg.data(), n);
