@@ -2,11 +2,11 @@ export module silog;
 import sv;
 
 export namespace silog {
-  using log_level = void (*)(const char *);
+  using log_level = void (*)(sv);
   __attribute__((format(printf, 2, 3))) void log(log_level lvl, const char * msg, ...);
 }
 namespace silog::impl {
-  void log(log_level lvl, const char * msg);
+  void log(log_level lvl, sv msg);
 }
 
 export namespace silog {
@@ -14,10 +14,10 @@ export namespace silog {
   [[noreturn]] __attribute__((format(printf, 1, 2))) void die(const char * msg, ...);
   [[noreturn]] __attribute__((format(printf, 1, 2))) void whilst(const char * msg, ...);
 
-  void debug(const char * msg) { impl::log(debug, msg); }
-  void error(const char * msg) { impl::log(error, msg); }
-  void info(const char * msg) { impl::log(info, msg); }
-  void warning(const char * msg) { impl::log(warning, msg); }
+  void debug(sv msg) { impl::log(debug, msg); }
+  void error(sv msg) { impl::log(error, msg); }
+  void info(sv msg) { impl::log(info, msg); }
+  void warning(sv msg) { impl::log(warning, msg); }
 
   void debugf(const char * msg, auto ... p) { log(debug, msg, p...); }
   void errorf(const char * msg, auto ... p) { log(error, msg, p...); }

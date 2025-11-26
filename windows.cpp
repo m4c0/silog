@@ -51,7 +51,7 @@ static bool write(const char * logpath, const char * msg) {
 
 static char logpath[MAX_PATH + 1] {};
 static char bkppath[MAX_PATH + 1] {};
-void silog::impl::log(silog::log_level lvl, const char * msg) {
+void silog::impl::log(silog::log_level lvl, sv msg) {
   mutex m {};
 
   SYSTEMTIME lt;
@@ -77,7 +77,7 @@ void silog::impl::log(silog::log_level lvl, const char * msg) {
   snprintf(
       buf,
       sizeof(buf) - 1,
-      "%04d-%02d-%02d %02d:%02d:%02d.%03d [%s] %s\n",
+      "%04d-%02d-%02d %02d:%02d:%02d.%03d [%s] %.*s\n",
       lt.wYear,
       lt.wMonth,
       lt.wDay,
@@ -86,7 +86,8 @@ void silog::impl::log(silog::log_level lvl, const char * msg) {
       lt.wSecond,
       lt.wMilliseconds,
       level,
-      msg);
+      static_cast<unsigned>(msg.size()),
+      msg.begin());
 
   // Print to stdout when available. This is useful for `main` apps but it
   // won't appear on `WinMain` apps.
