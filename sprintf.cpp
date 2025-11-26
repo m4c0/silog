@@ -7,7 +7,6 @@ module;
 #endif
 
 module silog;
-import :base;
 
 namespace {
   /// Exception class. Not meant to be caught. Use your own types if you want

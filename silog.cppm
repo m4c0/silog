@@ -1,8 +1,14 @@
 export module silog;
-export import :base;
 import jute;
 
-// TODO: allow removal of debug logs somehow
+export namespace silog {
+  enum log_level { debug, error, info, warning };
+  __attribute__((format(printf, 2, 3))) void log(log_level lvl, const char * msg, ...);
+}
+namespace silog::impl {
+  void log(log_level lvl, const char * msg);
+}
+
 export namespace silog {
   __attribute__((format(printf, 2, 3))) void log(log_level lvl, const char * msg, ...);
   [[noreturn]] __attribute__((format(printf, 1, 2))) void die(const char * msg, ...);
