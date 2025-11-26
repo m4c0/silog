@@ -2,10 +2,6 @@ module;
 #include <stdarg.h>
 #include <stdio.h>
 
-#ifdef LECO_TARGET_WASM
-#include <stdlib.h>
-#endif
-
 module silog;
 
 namespace {
@@ -33,11 +29,7 @@ void silog::die(const char * msg, ...) {
   va_end(arg);
 
   impl::log(error, buf);
-#ifndef LECO_TARGET_WASM
   throw death {};
-#else
-  abort();
-#endif
 }
 void silog::whilst(const char * msg, ...) {
   char buf[1024] = "while ";
@@ -48,9 +40,5 @@ void silog::whilst(const char * msg, ...) {
   va_end(arg);
 
   impl::log(error, buf);
-#ifndef LECO_TARGET_WASM
   throw death {};
-#else
-  abort();
-#endif
 }
