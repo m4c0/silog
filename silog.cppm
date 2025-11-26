@@ -2,13 +2,19 @@ export module silog;
 import jute;
 
 export namespace silog {
-  enum log_level { debug, error, info, warning };
+  using log_level = void (*)(const char *);
   __attribute__((format(printf, 2, 3))) void log(log_level lvl, const char * msg, ...);
 }
 namespace silog::impl {
   void log(log_level lvl, const char * msg);
 }
 
+export namespace silog {
+  void debug(const char * msg) {}
+  void error(const char * msg) {}
+  void info(const char * msg) {}
+  void warning(const char * msg) {}
+}
 export namespace silog {
   __attribute__((format(printf, 2, 3))) void log(log_level lvl, const char * msg, ...);
   [[noreturn]] __attribute__((format(printf, 1, 2))) void die(const char * msg, ...);
@@ -51,12 +57,11 @@ export namespace silog {
 
 namespace silog::impl {
   constexpr inline auto log_level_cstr(silog::log_level lvl) {
-    switch (lvl) {
-      case silog::debug: return "debug";
-      case silog::error: return "error";
-      case silog::info: return "info";
-      case silog::warning: return "warning";
-    }
+    if (lvl == silog::debug)   return "debug";
+    if (lvl == silog::error)   return "error";
+    if (lvl == silog::info)    return "info";
+    if (lvl == silog::warning) return "warning";
+    return "debug";
   }
 } // namespace silog::impl
 
