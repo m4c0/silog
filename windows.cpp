@@ -73,21 +73,16 @@ void silog::impl::log(silog::log_level lvl, sv msg) {
     bkppath[strlen(bkppath) - 1] = '_';
   }
 
+  auto tid = GetCurrentThreadId();
+
   char buf[1024] {};
-  snprintf(
-      buf,
-      sizeof(buf) - 1,
-      "%04d-%02d-%02d %02d:%02d:%02d.%03d [%s] %.*s\n",
-      lt.wYear,
-      lt.wMonth,
-      lt.wDay,
-      lt.wHour,
-      lt.wMinute,
-      lt.wSecond,
-      lt.wMilliseconds,
+  snprintf(buf, sizeof(buf) - 1,
+      "%04d-%02d-%02d %02d:%02d:%02d.%03d [%5s][t:%5ld] %.*s\n",
+      lt.wYear, lt.wMonth, lt.wDay,
+      lt.wHour, lt.wMinute, lt.wSecond, lt.wMilliseconds,
       level,
-      static_cast<unsigned>(msg.size()),
-      msg.begin());
+      tid,
+      static_cast<unsigned>(msg.size()), msg.begin());
 
   // Print to stdout when available. This is useful for `main` apps but it
   // won't appear on `WinMain` apps.
